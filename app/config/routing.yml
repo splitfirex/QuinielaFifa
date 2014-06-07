@@ -1,0 +1,5 @@
+org_quiniela:
+    resource: "@orgQuinielaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+

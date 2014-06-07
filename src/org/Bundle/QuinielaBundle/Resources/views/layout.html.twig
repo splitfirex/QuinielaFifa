@@ -1,0 +1,24 @@
+{% block head %}
+<link rel="stylesheet" href="{{ asset('bundles/orgquiniela/css/style.css') }}" />
+{% endblock %}
+
+{% block body %}
+<div id="main">
+  <div id="header">
+    <div id="logo">
+      <div id="logo_text">
+        <!-- class="logo_colour", allows you to change the colour of the text -->
+        <h1><a href="#">Quiniela Mundial 2014 </a></h1>
+      </div>
+    </div>
+    {% block navbar %}{% endblock %}
+  </div>
+
+
+
+
+  <div id="site_content">
+    {% block content %}{% endblock %}
+  </div>
+</div>
+{% endblock %}
