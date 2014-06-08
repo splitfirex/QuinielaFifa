@@ -120,6 +120,7 @@ class Usuario
             foreach ($this->partidos as $partido) {
                 if($partido->getNumPartido() == $partidoreal->getNumPartido()){
                     $partido->calcularPuntaje($partidoreal);
+                    break;
                 }
             }
         }
