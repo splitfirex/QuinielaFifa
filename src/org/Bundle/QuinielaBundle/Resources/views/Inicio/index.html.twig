@@ -3,168 +3,127 @@
 {% block title %}orgQuinielaBundle:Inicio:index{% endblock %}
 
 {% block navbar %}
-<div id="menubar">
-      <ul id="menu">
-        <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
-        <li class="selected"><a href="#">Bienvenido</a></li>
-      </ul>
-    </div>
+
+	<ul>
+	{% for item in usuarios if item.id != 999 %}
+		<li><a href="{{ path('q_user', {'id':item.id })}}">{{ item.puntos }} - {{ item.nombre}}</a></li>
+    {% endfor %}
+    </ul>
+
 {% endblock %}
 
 {% block content %}
-
-<div class="sidebar">
-	<!-- insert your sidebar items here -->
-	<h3>Ranking</h3>
-
-
-	{% set descending = 2 %}
-	{% for item in usuarios if item.id != 999 %}
-
-		{% if descending > 1 %}
-    	<h4 style="font-size:{{ descending }}em"><a href="{{ path('q_user', {'id':item.id })}}">{{ item.nombre }} - {{ item.puntos}}</a></h4>	
-
-		{% set descending = descending - 0.2%}
-
-    	{% else %}
-		<h4 style="font-size:1em"><a href="{{ path('q_user', {'id':item.id })}}">{{ item.nombre }} - {{ item.puntos}}</a></h4>	
-		{% endif %}
-
-    {% endfor %}
-
-
-</div>
-<div id="content">
-	<!-- insert the page content here -->
-		<h2>Resultados de partidos</h2>
-	{% set total = 0 %}
-	<h4>Fase Clasificación</h4>
-	<table style="width:100%;font-size:0.8em;">
+	<h2><a href="#">Clasificatoria</a></h2>
+	<table class="resultados2" style="float: left;width:290px;margin-right:10px">
 		{% for item in usuario.partidos if 49 > item.numPartido %}
+			<tr>
+			<td class="pos">{{ item.numPartido }}</td>
+			<td width="90px">{{ item.fecha|date('j/m/Y h:i') }}</td>
+			<td width="80px" style="text-align:right">{{item.paisHome.nombreCorto}} <img class="logo" style="vertical-align:middle"  height="10" width="15"src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisHome.bandera}}"></td>
+			<td width="20px">{{item.homeScore}}</td>
+			<td width="20px">{{item.vistScore}}</td>
+			<td width="80px" style="text-align:left"><img class="logo" style="vertical-align:middle"  height="10" width="15"src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisVisitante.bandera}}"> {{item.paisVisitante.nombreCorto}}</td>
+			</tr>
 
+			{% if (loop.index % 24) ==  0 %}
 
-		<tr>
-			<td  style="width:19px">{{ item.numPartido }}</td>
-			<td style="text-align:right;width:180px">{{ item.fecha|date(' l j/m/Y h:ia') }}</td>
-			<td style="text-align:right">{{item.paisHome.nombre}} <img src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisHome.bandera}}"/></td>
-			<td style="text-align:center;width:20px">{{item.homeScore}}</td>
-			<td style="text-align:center;width:20px">{{item.vistScore}}</td> 
-			<td style="text-align:left;width:150px"> <img src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisVisitante.bandera}}"/> {{item.paisVisitante.nombre}}</td>
-		</tr>
-		{% set total = total + item.puntaje %}
+			</table>
+			<table class="resultados2" style="display:inline-block;width:290px">
+
+			{% endif %}
+
 
 		{% endfor %}		
 	</table>
 
-	<h4>8vos de Final</h4>
-	<table style="width:100%;font-size:0.8em;">
+	<h2><a href="#">8vos de Final</a></h2>
+	<table class="resultados">
 		{% for item in usuario.partidos if 49 <= item.numPartido and item.numPartido < 57 %}
 
 
 		<tr>
-			<td  style="width:19px">{{ item.numPartido }}</td>
-<td style="text-align:right;width:180px">{{ item.fecha|date(' l j/m/Y h:ia') }}</td>
-			<td style="text-align:right">{{item.paisHome.nombre}} <img src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisHome.bandera}}"/></td>
-			<td style="text-align:center;width:20px">{{item.homeScore}}</td>
-			<td style="text-align:center;width:20px">{{item.vistScore}}</td> 
-			<td style="text-align:left;width:150px"> <img src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisVisitante.bandera}}"/> {{item.paisVisitante.nombre}}</td>
-			<td style="width:16px;text-align:center">{{ item.homePenal}}</td>
-			<td style="width:16px;text-align:center">{{ item.vistPenal}}</td>
+			<td class="pos">{{ item.numPartido }}</td>
+			<td width="90px">{{ item.fecha|date(' l j/m/Y h:i') }}</td>
+			<td width="80px" style="text-align:right">{{item.paisHome.nombre}} <img class="logo" style="vertical-align:middle"  height="10" width="15"src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisHome.bandera}}"></td>
+			<td width="20px">{{item.homeScore}}</td>
+			<td width="20px">{{item.vistScore}}</td>
+			<td width="80px" style="text-align:left"><img class="logo" style="vertical-align:middle"  height="10" width="15"src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisVisitante.bandera}}"> {{item.paisVisitante.nombre}}</td>
 		</tr>
-
-		{%  set total = total + item.puntaje %}
 
 		{% endfor %}		
 	</table>
 
-	<h4>4tos de Final</h4>
-	<table style="width:100%;font-size:0.8em;">
+	<h2><a href="#">4tos de Final</a></h2>
+	<table class="resultados">
 		{% for item in usuario.partidos if 57 <= item.numPartido and item.numPartido < 61 %}
 
 
+	
 		<tr>
-			<td  style="width:19px">{{ item.numPartido }}</td>
-<td style="text-align:right;width:180px">{{ item.fecha|date(' l j/m/Y h:ia') }}</td>
-			<td style="text-align:right">{{item.paisHome.nombre}} <img src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisHome.bandera}}"/></td>
-			<td style="text-align:center;width:20px">{{item.homeScore}}</td>
-			<td style="text-align:center;width:20px">{{item.vistScore}}</td> 
-			<td style="text-align:left;width:150px"> <img src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisVisitante.bandera}}"/> {{item.paisVisitante.nombre}}</td>
-			<td style="width:16px;text-align:center">{{ item.homePenal}}</td>
-			<td style="width:16px;text-align:center">{{ item.vistPenal}}</td>
+			<td class="pos">{{ item.numPartido }}</td>
+			<td width="90px">{{ item.fecha|date(' l j/m/Y h:i') }}</td>
+			<td width="80px" style="text-align:right">{{item.paisHome.nombre}} <img class="logo" style="vertical-align:middle"  height="10" width="15"src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisHome.bandera}}"></td>
+			<td width="20px">{{item.homeScore}}</td>
+			<td width="20px">{{item.vistScore}}</td>
+			<td width="80px" style="text-align:left"><img class="logo" style="vertical-align:middle"  height="10" width="15"src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisVisitante.bandera}}"> {{item.paisVisitante.nombre}}</td>
 		</tr>
 
-		{% set total = total + item.puntaje %}
 		{% endfor %}		
 	</table>
 
 
-	<h4>SemiFinal</h4>
-	<table style="width:100%;font-size:0.8em;">
+	<h2><a href="#">SemiFinal</a></h2>
+	<table class="resultados">
 		{% for item in usuario.partidos if 61 <= item.numPartido and item.numPartido < 63 %}
 
 
+
 		<tr>
-			<td  style="width:19px">{{ item.numPartido }}</td>
-<td style="text-align:right;width:180px">{{ item.fecha|date(' l j/m/Y h:ia') }}</td>
-			<td style="text-align:right">{{item.paisHome.nombre}} <img src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisHome.bandera}}"/></td>
-			<td style="text-align:center;width:20px">{{item.homeScore}}</td>
-			<td style="text-align:center;width:20px">{{item.vistScore}}</td> 
-			<td style="text-align:left;width:150px"> <img src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisVisitante.bandera}}"/> {{item.paisVisitante.nombre}}</td>
-			<td style="width:16px;text-align:center">{{ item.homePenal}}</td>
-			<td style="width:16px;text-align:center">{{ item.vistPenal}}</td>
+			<td class="pos">{{ item.numPartido }}</td>
+			<td width="90px">{{ item.fecha|date(' l j/m/Y h:i') }}</td>
+			<td width="80px" style="text-align:right">{{item.paisHome.nombre}} <img class="logo" style="vertical-align:middle"  height="10" width="15"src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisHome.bandera}}"></td>
+			<td width="20px">{{item.homeScore}}</td>
+			<td width="20px">{{item.vistScore}}</td>
+			<td width="80px" style="text-align:left"><img class="logo" style="vertical-align:middle"  height="10" width="15"src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisVisitante.bandera}}"> {{item.paisVisitante.nombre}}</td>
 		</tr>
 
-		{% set total = total + item.puntaje %}
 		{% endfor %}		
 	</table>
 
 
 
-	<h4>Tercer Lugar</h4>
-	<table style="width:100%;font-size:0.8em;">
+	<h2><a href="#">Tercer Lugar</a></h2>
+	<table class="resultados">
 		{% for item in usuario.partidos if 63 <= item.numPartido and item.numPartido < 64 %}
 
 
-		<tr>
-			<td  style="width:19px">{{ item.numPartido }}</td>
-<td style="text-align:right;width:180px">{{ item.fecha|date(' l j/m/Y h:ia') }}</td>
-			<td style="text-align:right">{{item.paisHome.nombre}} <img src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisHome.bandera}}"/></td>
-			<td style="text-align:center;width:20px">{{item.homeScore}}</td>
-			<td style="text-align:center;width:20px">{{item.vistScore}}</td> 
-			<td style="text-align:left;width:150px"> <img src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisVisitante.bandera}}"/> {{item.paisVisitante.nombre}}</td>
-			<td style="width:16px;text-align:center">{{ item.homePenal}}</td>
-			<td style="width:16px;text-align:center">{{ item.vistPenal}}</td>
+	<tr>
+			<td class="pos">{{ item.numPartido }}</td>
+			<td width="90px">{{ item.fecha|date(' l j/m/Y h:i') }}</td>
+			<td width="80px" style="text-align:right">{{item.paisHome.nombre}} <img class="logo" style="vertical-align:middle"  height="10" width="15"src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisHome.bandera}}"></td>
+			<td width="20px">{{item.homeScore}}</td>
+			<td width="20px">{{item.vistScore}}</td>
+			<td width="80px" style="text-align:left"><img class="logo" style="vertical-align:middle"  height="10" width="15"src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisVisitante.bandera}}"> {{item.paisVisitante.nombre}}</td>
 		</tr>
 
-		{% set total = total + item.puntaje %}
 		{% endfor %}		
 	</table>
 
-	<h4>Final</h4>
-	<table style="width:100%;font-size:0.8em;">
+	<h2><a href="#">Final</a></h2>
+	<table class="resultados">
 		{% for item in usuario.partidos if 64 <= item.numPartido and item.numPartido < 65 %}
 
 
 		<tr>
-			<td  style="width:19px">{{ item.numPartido }}</td>
-<td style="text-align:right;width:180px">{{ item.fecha|date(' l j/m/Y h:ia') }}</td>
-			<td style="text-align:right">{{item.paisHome.nombre}} <img src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisHome.bandera}}"/></td>
-			<td style="text-align:center;width:20px">{{item.homeScore}}</td>
-			<td style="text-align:center;width:20px">{{item.vistScore}}</td> 
-			<td style="text-align:left;width:150px"> <img src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisVisitante.bandera}}"/> {{item.paisVisitante.nombre}}</td>
-			<td style="width:16px;text-align:center">{{ item.homePenal}}</td>
-			<td style="width:16px;text-align:center">{{ item.vistPenal}}</td>
+			<td class="pos">{{ item.numPartido }}</td>
+			<td width="90px">{{ item.fecha|date(' l j/m/Y h:i') }}</td>
+			<td width="80px" style="text-align:right">{{item.paisHome.nombre}} <img class="logo" style="vertical-align:middle"  height="10" width="15"src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisHome.bandera}}"></td>
+			<td width="20px">{{item.homeScore}}</td>
+			<td width="20px">{{item.vistScore}}</td>
+			<td width="80px" style="text-align:left"><img class="logo" style="vertical-align:middle"  height="10" width="15"src="{{ asset('bundles/orgquiniela/images/flags/')}}{{item.paisVisitante.bandera}}"> {{item.paisVisitante.nombre}}</td>
 		</tr>
 
-		{% set total = total + item.puntaje %}
 		{% endfor %}		
 	</table>
-	
-</div>
-</div>
-<div id="content_footer"></div>
-<div id="footer">
-</div>
-
 
 {% endblock %}

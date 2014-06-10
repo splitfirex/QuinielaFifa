@@ -1,24 +1,36 @@
 {% block head %}
-<link rel="stylesheet" href="{{ asset('bundles/orgquiniela/css/style.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/orgquiniela/css/screen.css') }}"  media="screen" />
+<link rel="stylesheet" href="{{ asset('bundles/orgquiniela/css/style.css') }}" media="screen"  />
 {% endblock %}
 
 {% block body %}
-<div id="main">
-  <div id="header">
-    <div id="logo">
-      <div id="logo_text">
-        <!-- class="logo_colour", allows you to change the colour of the text -->
-        <h1><a href="#">Quiniela Mundial 2014 </a></h1>
-      </div>
-    </div>
+<!--################################################-->
+<div id="uppermenu"><header  class="clearfix">
+  <h1 class="left" style="padding-left: 210px;"><span style="color:#FFF">Quiniela Mundialista </span>2014</h1>
+</header></div>
+<div class="container"><!--centers the content between from header to footer-->
+
+<!--################################################-->
+<div id="content" class="clearfix">
+  <section id="posts" class="span-15 append-1">
+    <h1><a href="{{ path('q_index') }}"><span>Resultado de partidos</span></a></h1>
+    <article>
+      {% block content %}{% endblock %}   
+    </article>
+  </section>
+<!--################################################-->
+  <aside class="span-8 last right clearfix">
+    <h2><span>Ranking</span></h2>
     {% block navbar %}{% endblock %}
-  </div>
-
-
-
-
-  <div id="site_content">
-    {% block content %}{% endblock %}
-  </div>
-</div>
+  </aside>
+</div></div>
+<!--################################################-->
+<footer class="clearfix">
+  <div class="container"><hr />
+      
+      Copyright 2014 by <b>Dworks</b>, todos los derechos reservados
+      </div>
+</footer>
+</body>
 {% endblock %}
+</html>

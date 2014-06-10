@@ -69,6 +69,16 @@ class Pais
         return $this->nombre;
     }
 
+    public function getNombreCorto(){
+
+        if(strlen($this->nombre)>8){
+            return substr ( $this->nombre , 0 ,8 )."...";
+        }else{
+            return $this->nombre;
+        }
+
+    }
+
     /**
      * Set bandera
      *
